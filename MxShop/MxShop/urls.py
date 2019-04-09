@@ -20,6 +20,7 @@ import xadmin
 xadmin.autodiscover()
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('xadmin/', xadmin.site.urls)
+    path('xadmin/', xadmin.site.urls),
+    path('goods/', include("goods.urls")),
 ]
 

@@ -151,4 +151,23 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 每页显示的个数
     'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    )
 }
+
+# 设置 jwt的有效时间
+import datetime
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7), 
+    'JWT_AUTH_HEADER_PREFIX': 'JWT', 
+}
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend', # 自定义用户认证
+)
+
+# 验证手机号是否合法
+REGEX_MOBILE = r"^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"

@@ -44,9 +44,12 @@ INSTALLED_APPS = [
     'users',
     'goods',
     'trade',
-    'user_operation'
-
+    'user_operation',
+    'rest_framework',
+    'django_filters',
+    'rest_framework.authtoken', # 用户登录 与 手机注册
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -142,3 +145,10 @@ STATIC_URL = '/static/'
 
 # 使用自己的用户代替系统用户
 AUTH_USER_MODEL = 'users.UserProfile'
+
+REST_FRAMEWORK = {
+    # 分页
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 每页显示的个数
+    'PAGE_SIZE': 10,
+}

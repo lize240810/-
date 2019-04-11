@@ -33,7 +33,6 @@ class UserProfile(AbstractUser):
         return self.username
 
 
-
 class VerifyCode(models.Model):
     """
     验证码

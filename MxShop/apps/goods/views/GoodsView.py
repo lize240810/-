@@ -35,6 +35,7 @@ class GoodsListView(View):
 
 		# 三。 使用django的序列化
 		good_data = serializers.serialize('json', goods)
+		# import ipdb; ipdb.set_trace()
 		good_list = json.loads(good_data)
 		return JsonResponse(good_list, safe=False)
 

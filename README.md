@@ -27,21 +27,10 @@
     python manage.py runserver
 ```
 
-### vue部分
-1. API 接口
-2. Vue 与 api 交互
-3. Vue 相许组织结构分析
-
-### Django Rest_framework 技能
-- 通过 view 实现rest api接口
-- genericView 方式实现接口
-- Vuewset 盒router 方式实现api接口和url配置
-
 ## Django虚拟环境项目搭建
     1. 安装虚拟环境包
         ```
             pip install virtualenv
-
             pip install virtualenvwrapper-win
         ```
     2. 创建虚拟环境
@@ -64,6 +53,8 @@
         ```
             activate.bat
         ```
+
+
 ## Vue 环境搭建
 1. [下载node.js](https://nodejs.org/en/)
 2. 安装淘宝源的npm脚手架
@@ -78,3 +69,37 @@
     ```
         npm run serve
     ```
+
+
+### vue部分
+1. API 接口
+2. Vue 与 api 交互
+3. Vue 相许组织结构分析
+
+### Django Rest_framework 技能
+- 通过 view 实现rest api接口
+- viewsets.GenericViewSet 方式实现接口
+    - 配合 mixins.ListModelMixin 使用
+        - 直接实现 分页
+        - 与get关联
+- django_filters 使用
+    - 指定字段 搜索
+    - 指定字段 排序
+    - 指定字段 过滤
+- serializers
+    - 实现字段序列化
+    - 序列化的嵌套功能
+
+- Vuewset 和 router 方式实现api接口和url配置
+```
+    from goods.views_api.GoodView import GoodsListViewSet # 继承了 Vuewset的视图
+    from rest_framework.routers import DefaultRouter # 集成方式定义urls
+    router = DefaultRouter()
+    # 配置goods 的url 注册视图
+    router.register('goods_list', GoodsListViewSet)
+    # 注册路由
+    urlpatterns = [
+        re_path(r'^', include(router.urls)),
+    ]
+```
+

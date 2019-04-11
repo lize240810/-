@@ -12,8 +12,10 @@ class GoodsCategory(models.Model):
     )
 
     name = models.CharField("类别名", default="", max_length=30, help_text="类别名")
-    code = models.CharField("类别code", default="", max_length=30, help_text="类别code")
-    desc = models.CharField("类别描述", default="",max_length=30, help_text="类别描述")
+    code = models.CharField("类别code", default="",
+                            max_length=30, help_text="类别code")
+    desc = models.CharField(
+        "类别描述", default="", max_length=30, help_text="类别描述")
     # 目录树级别
     category_type = models.IntegerField(
         "类目级别", choices=CATEGORY_TYPE, help_text="类目级别")
@@ -34,7 +36,8 @@ class GoodsCategory(models.Model):
 
 class Goods(models.Model):
     """商品"""
-    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="商品类目")
+    category = models.ForeignKey(
+        GoodsCategory, on_delete=models.CASCADE, verbose_name="商品类目")
     goods_sn = models.CharField("商品唯一货号", max_length=50, default="")
     name = models.CharField("商品名", max_length=100)
     click_num = models.IntegerField("点击数", default=0)
@@ -47,7 +50,8 @@ class Goods(models.Model):
     goods_num = models.IntegerField("商品数量", default=0)
     market_price = models.FloatField("市场价格", default=0.0)
     # 首页中展示的商品封面图
-    goods_front_image = models.ImageField(upload_to="goods/images", null=True, blank=True, verbose_name="封面图")
+    goods_front_image = models.ImageField(
+        upload_to="goods/images", null=True, blank=True, verbose_name="封面图")
     is_new = models.BooleanField("是否新品", default=False)
     is_hot = models.BooleanField("是否热销", default=False)
     add_time = models.DateTimeField("添加时间", default=datetime.now)
@@ -62,13 +66,16 @@ class Goods(models.Model):
 
 class GoodsImage(models.Model):
     """商品轮播图"""
-    goods = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name="商品", related_name="images")
-    images = models.ImageField(upload_to="", verbose_name="图片", null=True, blank=True)
-        
-            
+    goods = models.ForeignKey(
+        Goods, on_delete=models.CASCADE, verbose_name="商品", related_name="images")
+    images = models.ImageField(
+        upload_to="", verbose_name="图片", null=True, blank=True)
+
+
 class Baner(models.Model):
     """首页轮播商品"""
-    goods = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name="商品")
+    goods = models.ForeignKey(
+        Goods, on_delete=models.CASCADE, verbose_name="商品")
     image = models.ImageField(upload_to='banner', verbose_name="轮播图片")
     index = models.IntegerField('轮播顺序', default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now)
@@ -85,9 +92,11 @@ class IndexAd(models.Model):
     """
     商品广告
     """
-    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, related_name='category',verbose_name="商品类目")
-    goods =models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='goods')
-  
+    category = models.ForeignKey(
+        GoodsCategory, on_delete=models.CASCADE, related_name='category', verbose_name="商品类目")
+    goods = models.ForeignKey(
+        Goods, on_delete=models.CASCADE, related_name='goods')
+
     class Meta:
         verbose_name = '首页广告'
         verbose_name_plural = verbose_name
@@ -100,8 +109,8 @@ class HotSearchWords(models.Model):
     """
     搜索栏下方热搜词
     """
-    keywords = models.CharField("热搜词",default="", max_length=20)
-    index = models.IntegerField("排序",default=0)
+    keywords = models.CharField("热搜词", default="", max_length=20)
+    index = models.IntegerField("排序", default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now)
 
     class Meta:

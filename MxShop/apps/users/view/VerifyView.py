@@ -3,9 +3,11 @@ import random
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 
-from users.serializers import SmsSerializer # 手机号码验证
 from utils.yuntongxun import message_validate # 发送短息你的方法
+from users.serializers import SmsSerializer, UserRegSerializer # 手机号码验证
 from users.models import VerifyCode
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class SmsCodeViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -42,3 +44,28 @@ class SmsCodeViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response({
                 'mobile': mobile,
                 }, status=status.HTTP_201_CREATED)
+
+
+class UserViewset(mixins.CreateModelMixin,viewsets.GenericViewSet):
+    '''
+    用户
+    '''
+    serializer_class = UserRegSerializer
+    queryset = User.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        import ipdb; ipdb.set_trace()
+        user = self.perform_create(serializer)
+        re_dict = serializer.data
+        payload = jwt_payload_handler(user)
+        re_dict["token"] = jwt_encode_handler(payload)
+        re_dict["name"] = user.name if user.name else user.username
+
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        return serializer.save()

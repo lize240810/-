@@ -54,23 +54,26 @@ class UserRegSerializer(serializers.ModelSerializer):
         allow_blank=False,
         validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")]
     )
+    
 
+    # import ipdb; ipdb.set_trace()
     # 验证code 
     def validate_code(self, code):
         # 用户注册，以post方式提交信息，post的数据都存储在initial_data 里面
         # username 就是用户注册的手机号码, 验证码需要按照时间倒序排序，为后面验证过期，错误
-        # import ipdb; ipdb.set_trace()
+        
         # 获取前端输入的username 根据表中的电话号码查询数据 再
         verify_records = VerifyCode.objects.filter(mobile=self.initial_data['username']).order_by('-add_time')
 
+
         if verify_records:
-            
             # 最近的一个验证码
             last_record = verify_records[0]
             # 有效期为五分钟。
             five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
             # 修改时间格式
-            verify_records.add_time = verify.add_time.replace(tzinfo=None)
+            # import ipdb; ipdb.set_trace()
+            # record_time = record_time.strftime("%Y-%m-%d %H:%M:%S")
             if five_mintes_ago > last_record.add_time:
                 raise serializers.ValidationError("验证码过期")
 
@@ -82,9 +85,10 @@ class UserRegSerializer(serializers.ModelSerializer):
 
         # 所有字段。attrs是字段验证合法之后返回的总的dict
     def validate(self, attrs):
+        # import ipdb; ipdb.set_trace()
         #前端没有传mobile值到后端，这里添加进来
         attrs["mobile"] = attrs["username"]
-        #code是自己添加得，数据库中并没有这个字段，验证完就删除掉
+        # code是自己添加得，数据库中并没有这个字段，验证完就删除掉
         del attrs["code"]
         return attrs
 
@@ -92,12 +96,12 @@ class UserRegSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username','code','mobile', 'password')
 
-    # 暗文密码
+    # 输入密码的时候不显示明文
     password = serializers.CharField(
-        style={'input_type': 'password'},label="密码",write_only=True
+        style={'input_type': 'password'}, label=True, write_only=True
     )
 
-    #密码加密保存
+    # 密码加密保存
     def create(self, validated_data):
         user = super(UserRegSerializer, self).create(validated_data=validated_data)
         user.set_password(validated_data["password"])

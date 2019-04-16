@@ -8,7 +8,10 @@ from goods.models import GoodsCategory
 from goods.serializers import CategorySerializer_one
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-	"""商品分类"""
+	"""
+		list: 商品全部类别
+		retrieve: 根据商品id查询呢
+	"""
 	# import ipdb; ipdb.set_trace()
 	queryset = GoodsCategory.objects.filter(category_type=1)
 	# 序列化

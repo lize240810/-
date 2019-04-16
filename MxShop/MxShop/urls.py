@@ -16,5 +16,6 @@ urlpatterns = [
     path('api/goods/', include('goods.urls_api')), # django_restfroamework 后端返回的数据
     path('api-token-auth/', obtain_auth_token), # 使用drf中的token
     path('jwt-auth/', obtain_jwt_token, name="login"), # jwt的认证接口 jwt json web token
-    path('api/users/', include('users.urls')), 
+    path('api/users/', include('users.urls')),
+    path('api/user_operation/', include('user_operation.urls')), # 用户操作接口
 ]

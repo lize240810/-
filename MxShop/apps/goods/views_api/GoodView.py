@@ -38,8 +38,14 @@ from rest_framework import filters
 
 
 # 三。 使用ViewSet 
-class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """商品列表页"""
+class GoodsListViewSet(
+    mixins.ListModelMixin, # ListModelMixin 里面list方法帮我们做好了分页和序列化的工作，只要调用就好了
+    mixins.RetrieveModelMixin, #要想获取某一个商品的详情的时候，继承 mixins.RetrieveModelMixin  就可以了
+    viewsets.GenericViewSet): # GenericAPIView继承APIView，封装了很多方法，比APIView功能更强大
+    """
+        list: 商品列表， 分页，搜索， 过滤， 排序
+        retrieve: 获取商品详细信息
+    """
     '''
         mixins 主要是作用于 局部增删改查 get与商品关联， 分页等
     '''
@@ -61,4 +67,4 @@ class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     #排序
     ordering_fields = ('sold_num', 'add_time')
     ordering_fields = ('sold_num', 'add_time')
-
+        

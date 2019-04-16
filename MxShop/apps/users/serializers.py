@@ -3,9 +3,11 @@ import re
 from datetime import datetime, timedelta 
 from MxShop.settings import REGEX_MOBILE # 验证手机号
 from .models import VerifyCode # 验证码模型类
+from user_operation.models import UserFav
 from rest_framework import serializers 
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model
+from goods.serializers import GoodsSerializer
 User = get_user_model()
 
 
@@ -34,6 +36,7 @@ class SmsSerializer(serializers.Serializer):
             raise serializers.ValidationError("距离上一次发送未超过60s")
 
         return mobile
+
 
 class UserRegSerializer(serializers.ModelSerializer):
     """用户注册"""
@@ -98,7 +101,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 
     # 输入密码的时候不显示明文
     password = serializers.CharField(
-        style={'input_type': 'password'}, label=True, write_only=True
+        style={'input_type': 'password'}, label="密码", write_only=True
     )
 
     # 密码加密保存
@@ -109,4 +112,10 @@ class UserRegSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    """用户详细信息"""
+    class Meta:
+        model = User
+        fields = ("name", "gender", "birthday", "email", "mobile")
         
+

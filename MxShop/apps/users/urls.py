@@ -1,5 +1,6 @@
 from django.urls import path, include, re_path
-from users.view.VerifyView import SmsCodeViewset, UserViewset
+from users.view.VerifyView import SmsCodeViewset
+from users.view.User_action import UserViewset
 from rest_framework.routers import DefaultRouter # 集成方式定义urls
 
 # ViewSets 和 Routers 结合使用

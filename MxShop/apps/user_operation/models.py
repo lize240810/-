@@ -20,7 +20,7 @@ class UserFav(models.Model):
 
 
 	def __str__(self):
-		return self.user.username
+		return '{0}-->{1}'.format(self.user.username, self.goods.name)
 
 
 class UserAddress(models.Model):
@@ -55,7 +55,7 @@ class UserLeavingMessage(models.Model):
 		help_text="留言类型: 1(留言),2(投诉),3(询问),4(售后),5(求购)")
 	subject = models.CharField("主题", max_length=100, default="")
 	message = models.TextField("留言内容", default="", help_text="留言内容")
-	file = models.FileField(upload_to='message/image', verbose_name="上传文件", help_text="上传文件")
+	file = models.FileField(upload_to='message/image', verbose_name="上传文件", help_text="上传文件", default="")
 	add_time = models.DateTimeField("添加时间", default=datetime.now)
 
 	class Meta:

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user_operation.models import UserFav, UserLeavingMessage
+from user_operation.models import UserFav, UserLeavingMessage, UserAddress
 from rest_framework.validators import UniqueTogetherValidator
 from goods.serializers import GoodsSerializer
 
@@ -43,3 +43,14 @@ class LeavingMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserLeavingMessage
         fields = ("user", "message_type", "subject", "message", "file", "id" ,"add_time")
+
+
+class AddressSerializers(serializers.ModelSerializer):
+    """用户收货地址管理"""
+    user = serializers.HiddenField(
+        default = serializers.CurrentUserDefault()
+    )
+    add_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M')
+    class Meta:
+        model = UserAddress
+        fields = ('user', 'province', 'city', 'district', 'address', 'signer_name', 'signer_mobile', 'add_time')

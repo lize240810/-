@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated # 认证
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication # 认证
 from rest_framework.authentication import SessionAuthentication # 登录认证
 
-from trade.models import ShoppingCart, OrderInfo, OrderGoods
+from trade.models import ShoppingCart, OrderGoods
 from trade.serializers import ShopSerializer, ShopCartDetailSerializer # 序列化
 from utils.permissions import IsOwerOrReadOnly
 

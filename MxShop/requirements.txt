@@ -9,3 +9,4 @@ ipdb==0.12
 django-guardian==1.5.0
 coreapi==2.3.3
 djangorestframework-jwt==1.11.0
+pycryptodome==3.8.1

@@ -27,7 +27,7 @@ SECRET_KEY = 'ksb2)hs%+f(gf5@ldb*b@$s^e)%s_c%0@9$to(n=wd=!t5stj$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -171,3 +171,7 @@ AUTHENTICATION_BACKENDS = (
 
 # 验证手机号是否合法
 REGEX_MOBILE = r"^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+# 设置公匙与私匙的路径
+private_key_path = os.path.join(BASE_DIR, 'apps/trade/keys/private_2048.txt')
+ali_pub_key_path = os.path.join(BASE_DIR, 'apps/trade/keys/alipay_key_2048.txt')

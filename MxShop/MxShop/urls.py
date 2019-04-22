@@ -4,6 +4,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_jwt.views import obtain_jwt_token
+from apps.trade.view.AlipayView import  AlipayView
 
 xadmin.autodiscover()
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path('jwt-auth/', obtain_jwt_token, name="login"), # jwt的认证接口 jwt json web token
     path('api-users/', include('users.urls')), # 系统用户
     path('api-user_operation/', include('user_operation.urls')), # 用户操作接口
-    path('api-trade/', include('trade.urls')) # 购物车类
+    path('api-trade/', include('trade.urls')), # 购物车类
+    path('alipay/return/', AlipayView.as_view()), # 支付宝支付接口
 ]

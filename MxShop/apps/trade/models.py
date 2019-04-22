@@ -46,7 +46,7 @@ class OrderInfo(models.Model):
 	trade_no = models.CharField("交易号", max_length=100, null=True, blank=True, unique=True)
 	# # 订单的支付类型
 	pay_type = models.CharField("支付类型", choices=PAY_TYPE, default="alipay", max_length=10)
-	post_script = models.CharField("订单留言", max_length=200)
+	post_script = models.CharField("订单留言", max_length=200, default="")
 	order_money = models.FloatField("订单金额", default=0.0)
 	pay_time = models.DateTimeField("支付时间", null=True, blank=True)
 
